@@ -18,29 +18,25 @@ function running() {
 function getFractalSequence(sequence, rules, noOfFractral) {
     if (noOfFractral === 0) return sequence;
     const newSequence = [];
+
     for (const element of sequence) {
-        for (const substitute of rules[element]) {
-            newSequence.push(substitute);
+        if (rules[element]) {
+            for (const substitute of rules[element]) {
+                newSequence.push(substitute);
+            }
+        } else {
+            newSequence.push(element);
         }
     }
     return getFractalSequence(newSequence, rules, noOfFractral - 1);
 }
 
-// function drawFractal(sequence, w) {
-//     r.DrawLineEx(
-//         { x: w.windowWidth / 2, y: w.windowHeight },
-//         { x: w.windowWidth / 2, y: w.windowHeight - 50 },
-//         5,
-//         r.BLACK,
-//     );
-// }
-
 function draw(world) {
     r.BeginDrawing();
     r.ClearBackground(r.WHITE);
-    const rules = { A: ["A", "B"], B: ["A"] };
+    const rules = { 1: ["1", "1"], 0: ["1", "[", "0", "]", "0"] };
     const noOfFractral = 5;
-    const sequence = getFractalSequence("A", rules, noOfFractral);
+    const sequence = getFractalSequence("1", rules, noOfFractral);
     //drawFractal(sequence, world);
     console.log(sequence);
     r.EndDrawing();
