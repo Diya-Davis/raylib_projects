@@ -30,6 +30,7 @@ function setup(windowWidth, windowHeight, title, FPS) {
 function running() {
     return !r.WindowShouldClose();
 }
+
 function getFractalSequence(sequence, rules, noOfFractral) {
     if (noOfFractral === 0) return sequence;
     const newSequence = [];
@@ -50,27 +51,27 @@ function drawFractal(sequence, world) {
     let x = world.windowWidth / 2;
     let y = world.windowHeight - 20;
     let angle = -90;
-    let length = 10;
+    let length = 5;
     const stack = [];
 
     for (const symbol of sequence) {
         if (symbol === "1" || symbol === "0") {
-            const radians = (angle * Math.PI) / 180;
+            const radians = angle * (Math.PI / 180);
             const newX = x + length * Math.cos(radians);
             const newY = y + length * Math.sin(radians);
 
-            r.DrawLineEx({ x, y }, { x: newX, y: newY }, 3, r.GREEN);
+            r.DrawLineEx({ x, y }, { x: newX, y: newY }, 1, r.GREEN);
 
             x = newX;
             y = newY;
         } else if (symbol === "[") {
             stack.push({ x, y, angle });
-            angle -= 45;
+            angle -= 40;
         } else if (symbol === "]") {
             const saved = stack.pop();
             x = saved.x;
             y = saved.y;
-            angle = saved.angle + 45;
+            angle = saved.angle + 40;
         }
     }
 }
@@ -79,7 +80,7 @@ function draw(world) {
     r.BeginDrawing();
     r.ClearBackground(r.WHITE);
     const rules = { 1: ["1", "1"], 0: ["1", "[", "0", "]", "0"] };
-    const noOfFractral = 6;
+    const noOfFractral = 7;
     const sequence = getFractalSequence("0", rules, noOfFractral);
     drawFractal(sequence, world);
     r.EndDrawing();
@@ -99,7 +100,7 @@ function loop(world) {
 }
 
 function main() {
-    const world = setup(1000, 1000, "Fractal tree", 60);
+    const world = setup(1000, 900, "Fractal tree", 60);
     loop(world);
     teardown();
 }
