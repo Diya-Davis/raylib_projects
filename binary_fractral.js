@@ -60,13 +60,13 @@ function drawFractal(sequence, world) {
             const newX = x + length * Math.cos(radians);
             const newY = y + length * Math.sin(radians);
 
-            r.DrawLineEx({ x, y }, { x: newX, y: newY }, 1, r.GREEN);
+            r.DrawLineEx({ x, y }, { x: newX, y: newY }, 5, r.GREEN);
 
             x = newX;
             y = newY;
         } else if (symbol === "[") {
             stack.push({ x, y, angle });
-            angle -= 40;
+            angle -= 406;
         } else if (symbol === "]") {
             const saved = stack.pop();
             x = saved.x;
